@@ -14,6 +14,34 @@ function keyUp() {
 }
 
 function keyDown() {
+  var handled = true;
+
+  switch (event.keyCode) {
+
+  case RIGHT_KEY:
+    dx = 1;
+    dy = 0;
+    break;
+  case LEFT_KEY:
+    dx = -1;
+    dy = 0;
+    break;
+  case UP_KEY:
+    dx = 0;
+    dy = -1;
+    break;
+  case DOWN_KEY:
+    dx = 0;
+    dy = 1;
+    break;
+  default:
+    handled = false;
+    break;
+  }
+
+  if (handled) {
+    event.preventDefault();
+  }
 
 }
 
