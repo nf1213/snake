@@ -1,6 +1,6 @@
 function Snake(size) {
   this.size = size;
-  this.segements = [new SnakeSegement(350, 350), new SnakeSegement(335, 350)];
+  this.segements = [new SnakeSegement(5, 5, this.size), new SnakeSegement(4, 5, this.size)];
   this.dx = 1;
   this.dy = 0;
 
