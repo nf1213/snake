@@ -1,13 +1,10 @@
-var snake = new Snake();
+var snake = new Snake(15);
 var ctx;
-var canvas=document.getElementById('canvas');
+var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var WIDTH = ctx.canvas.width
 var HEIGHT = ctx.canvas.height
-
-function keyUp() {
-
-}
+var grid = new Grid(WIDTH/snake.size, HEIGHT/snake.size, snake.size)
 
 function keyDown() {
   var handled = true;
@@ -40,23 +37,23 @@ function keyDown() {
 // GAME LOGIC
 
 function check() {
-  if(snake.x <= 0 || snake.x >= WIDTH - snake.size || snake.y <= 0 || snake.y >= HEIGHT - snake.size){
+  if(snake.segements[0].x <= 0 || snake.segements[0].x >= WIDTH - snake.size || snake.segements[0].y <= 0 || snake.segements[0].y >= HEIGHT - snake.size){
     return false;
   }
   return true;
 }
 
-function draw() {
-  ctx.clearRect(0,0,WIDTH,HEIGHT);
-
-  ctx.fillRect(snake.x, snake.y, snake.size * snake.length, snake.size);
-
-  snake.x += snake.dx;
-  snake.y += snake.dy;
+function draw(i) {
+  ctx.fillRect(snake.segements[i].x, snake.segements[i].y, snake.size, snake.size);
 }
 
 function loop(time) {
-  draw();
+  ctx.clearRect(0,0,WIDTH,HEIGHT);
+  for(var i = 0; i < snake.segements.length; i++) {
+    snake.segements[i].x += snake.dx;
+    snake.segements[i].y += snake.dy;
+    draw(i);
+  }
 
   if (check()) {
     window.requestAnimationFrame(function(time) {
@@ -67,7 +64,6 @@ function loop(time) {
 
 function run() {
   window.onkeydown = keyDown;
-  window.onkeyup = keyUp;
 
   window.requestAnimationFrame(function(time) {
     loop(time);
