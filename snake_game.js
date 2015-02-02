@@ -1,8 +1,4 @@
-var x = 350;
-var y = 350;
-var dx = 0;
-var dy = 1;
-var SNAKE_HEAD = 20;
+var snake = new Snake();
 var ctx;
 var canvas=document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
@@ -19,20 +15,16 @@ function keyDown() {
   switch (event.keyCode) {
 
   case RIGHT_KEY:
-    dx = 1;
-    dy = 0;
+    snake.moveRight();
     break;
   case LEFT_KEY:
-    dx = -1;
-    dy = 0;
+    snake.moveLeft();
     break;
   case UP_KEY:
-    dx = 0;
-    dy = -1;
+    snake.moveUp()
     break;
   case DOWN_KEY:
-    dx = 0;
-    dy = 1;
+    snake.moveDown()
     break;
   default:
     handled = false;
@@ -48,7 +40,7 @@ function keyDown() {
 // GAME LOGIC
 
 function check() {
-  if(x <= 0 || x >= WIDTH - SNAKE_HEAD || y <= 0 || y >= HEIGHT - SNAKE_HEAD){
+  if(snake.x <= 0 || snake.x >= WIDTH - snake.size || snake.y <= 0 || snake.y >= HEIGHT - snake.size){
     return false;
   }
   return true;
@@ -57,10 +49,10 @@ function check() {
 function draw() {
   ctx.clearRect(0,0,WIDTH,HEIGHT);
 
-  ctx.fillRect(x, y, SNAKE_HEAD, SNAKE_HEAD);
+  ctx.fillRect(snake.x, snake.y, snake.size * snake.length, snake.size);
 
-  x += dx;
-  y += dy;
+  snake.x += snake.dx;
+  snake.y += snake.dy;
 }
 
 function loop(time) {
